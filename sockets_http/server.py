@@ -46,17 +46,30 @@
 '''
 
 import socket
+import re
+from datetime import datetime
+# import os
 
-HOST = ('127.0.0.1', 7771)
+# file_dir = os.path.dirname(__file__)
+
+
+HOST = ('127.0.0.1', 7779)
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.bind(HOST)
-sock.listen()
+sock.listen(5)
+users = {}
+path = ''
+
+OK = b'HTTP/1.1 200 OK\n'
+HEADERS = b"Host: some.ru\nHost1: some1.ru\n\n"
+ERR_404 = b'HTTP/1.1 404 Not Found\n\n'
+
+
 
 def send_file(file_name, conn):
     try:
         with open(file_name.lstrip('/'), 'rb') as f:                   
-            print(f"send file {file_name}")
             conn.send(OK)
             conn.send(HEADERS)
             conn.send(f.read())
@@ -72,40 +85,47 @@ def is_file(path):
             return True
     return False
 
+def http_request(data):
+        
+
+        if path == '/':
+            send_file('index.html', conn) 
+
+        if is_file(path):
+            send_file(path, conn)
+
+        if path.startswith("/test/"):
+             num = int(path.strip('/').split('/')[1])  
+             conn.send(f"тест с номером {num} запущен".encode)         
+        else:
+            conn.send(ERR_404)
 
 
+def no_http_request(data):
+     if "reg" in data
 
-path = ''
-
-OK = b'HTTP/1.1 200 OK\n'
-HEADERS = b"Host: some.ru\nHost1: some1.ru\n\n"
-ERR_404 = b'HTTP/1.1 404 Not Found\n\n'
 
 while True:
+
     print("---listen----")
     conn, addr = sock.accept()
     data = conn.recv(1024).decode()
-    data = data.upper()
     print(data)
+
     
     try:
+        if data.startswith("GET") or data.startswith("POST"):
+            method, path, ver  = data.split('\n')[0].split(" ", 2)        
+            http_request(data)
+
+        if data.startswith("command"):
+            no_http_request(data)
         
-        method, path, ver  = data.split('\n')[0].split(" ", 2) # получаем path из 1ой строки http                        
-        print('-----', method, path, ver)
-        if "?" in path:
-            path, params = path.split("?", 1)
-            
+        else: 
+             
+            conn.send(f"Пришли неизвестные данные - {data}".encode())
 
-
-        else:
-            if path == '/':
-                send_file('1.html', conn)
-            else:
-
-                conn.send(ERR_404)
-                
-            
-    except:
-                conn.send(b'--------no http----------')
+    except Exception as e:
+         print(f"Error: {e}")
         
     conn.close()
