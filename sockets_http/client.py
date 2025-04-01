@@ -45,10 +45,10 @@ def user_signing(login,password):
 
     sock.close() 
 
-user_register('Vasja','yuy0990')
-user_register('Dimas','HDerr23')
-user_signing('Vasja','yuy0990')
-user_signing('Dimas','HDerr23')
+user_register('Vasjja','yuy0990dd')
+user_register('Dimaas','HDerr2323')
+user_signing('Vasjja','yuy0990dd')
+user_signing('Dimaas','HDerr2323')
 
 
 

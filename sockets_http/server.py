@@ -85,9 +85,12 @@ def is_file(path):
             return True
     return False
 
+
+
+
+
 def http_request(data):
         
-
         if path == '/':
             send_file('index.html', conn) 
 
@@ -95,14 +98,41 @@ def http_request(data):
             send_file(path, conn)
 
         if path.startswith("/test/"):
-             num = int(path.strip('/').split('/')[1])  
-             conn.send(f"тест с номером {num} запущен".encode)         
+            num = int(path.strip('/').split('/')[1])
+            conn.send(OK)
+            conn.send(HEADERS)  
+            conn.send(f"тест с номером {num} запущен".encode())         
         else:
             conn.send(ERR_404)
 
+def check_login(login):
+        pattern_login =  r'^[a-zA-Z0-9-_]{6,}$'
+        if re.search(pattern_login, login): 
+            return True 
+
+
+def check_password(password):
+        pattern_pass = r'^(?=.*\d)[0-9a-zA-Z]{8,}$'
+        if re.search(pattern_pass, password): 
+            return True
+
+def is_registered(login,users):
+    return login in users
 
 def no_http_request(data):
-     if "reg" in data
+    if "reg" in data:
+        if check_login(login) and check_password(password):
+            users[login] = password
+            conn.send(f"{datetime.now():%d.%m.%Y %H-%M} - пользователь {login} зарегистрирован".encode())
+        else:
+            conn.send(f"{datetime.now():%d.%m.%Y %H-%M} - ошибка регистрации {login} - неверный пароль/логин".encode())    
+        
+
+    if "signin" in data:
+        if  is_registered(login,users):
+            conn.send(f"{datetime.now():%d.%m.%Y %H-%M} - пользователем {login} произведен вход".encode())
+        else:
+           conn.send(f"{datetime.now():%d.%m.%Y %H-%M} - ошибка входа {login} - неверный пароль/логин".encode())
 
 
 while True:
@@ -119,6 +149,8 @@ while True:
             http_request(data)
 
         if data.startswith("command"):
+            login = data.split(";", 2)[1].strip(" ").split(":")[1]      #"command:signin; login:<login>; password:<pass>"
+            password = data.split(";", 2)[2].strip(" ").split(":")[1]
             no_http_request(data)
         
         else: 
@@ -129,3 +161,4 @@ while True:
          print(f"Error: {e}")
         
     conn.close()
+    print(users)
