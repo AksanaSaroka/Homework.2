@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main page</title>
+    <title>duck</title>
     <style>
 
         /* только те p которые внутри div */
@@ -45,28 +45,26 @@
     </style>
 </head>
 <body>
-    
+    <h1>рандомная утка №ххх</h1>   
     <h1 class="red bold box-shadow">{{ h }}</h1>
-    <p> Посещений {{ n }} </p>
+    <br>
 
-    {% set h1=123 %}
+    <div class="fig-wrapper">
+        <!-- вариант картинки из интернета -->
+        <figure>
+            <img width="300"  src="https://random-d.uk/api/images/51.jpg" alt="Powered by random-d.uk" >
+            <figcaption> вариант картинки из интернета </figcaption>
+        </figure>
+        
 
-    {% if h1 == True %}
-        <p> {{ h1 }} </p>
-    {% else %}
-        <p>нет h</p>
-    {% endif %}
-    
-    <!-- div тэг указывающий чт тут блок чего-то, в данном случае с пользователями -->
-    <div name="users" id="users" class="red">
-        <h4>Пользователи</h4>
-        {% for user in users%}
-            <p> 
-                <span style="color: rgb(122, 101, 127); font-style:italic;"> {{ loop.index }} </span>
-                {{ user }} 
-            </p>
-        {%endfor%}
     </div>
+
+
+
+
+    
+
+
     
     <p class="red">
         <a href="/">На главную</a>

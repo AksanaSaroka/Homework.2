@@ -94,10 +94,10 @@ def http_request(data):
         if path == '/':
             send_file('index.html', conn) 
 
-        if is_file(path):
+        elif is_file(path):
             send_file(path, conn)
 
-        if path.startswith("/test/"):
+        elif path.startswith("/test/"):
             num = int(path.strip('/').split('/')[1])
             conn.send(OK)
             conn.send(HEADERS)  

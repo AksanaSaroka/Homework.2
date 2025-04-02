@@ -35,8 +35,8 @@ def index():
     return render_template('index.html')
 
 @app.route("/duck/")
-def sheet1():
-    return render_template("1.html", h="HELLO 123456")
+def duck():
+    return render_template("duck.html")
 
 @app.route("/fox/<int:num>/")
 def test(num):
