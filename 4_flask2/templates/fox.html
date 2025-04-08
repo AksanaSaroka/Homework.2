@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fox</title>
+
+</head>
+<body>
+    <h1>Количество лисичек {{count_fox}}</h1>
+    <h1>{{text}}</h1>   
+    <br>
+
+    <div class="fig-wrapper">
+        <!-- вариант картинки из интернета -->
+        {% for fox in foxes %}
+            <figure>
+                <img width="300"  src="{{fox}}" alt="Random Fox" >
+            </figure>
+        {% endfor %}
+    </div>
+
+   
+    <p>
+        <a href="/">На главную</a>
+    </p>
+</body>
+</html>
