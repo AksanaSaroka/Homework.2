@@ -105,7 +105,7 @@ def weather_city(city='Minsk'):
         return render_template ('weather_city.html',
                                 text = "Oшибка")
     
-@app.route("/weather-minsk/")
+@app.route("/weather/Minsk/")
 def weather_minsk():
     return weather_city(city='Minsk')
 
