@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>fox</title>
+{% extends 'base.html' %}
 
-</head>
-<body>
+{% block title %}fox{% endblock %}
+
+{% block content %}
     <h1>Количество лисичек {{count_fox}}</h1>
     <h1>{{text}}</h1>   
     <br>
@@ -24,5 +20,4 @@
     <p>
         <a href="/">На главную</a>
     </p>
-</body>
-</html>
+{% endblock %}

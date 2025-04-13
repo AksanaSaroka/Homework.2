@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %}{% endblock %}</title>
+    <style>
+        *,
+        *::after,
+        *::before {
+            box-sizing: border-box;
+        }
+        
+        html {
+            display: flex;
+            min-width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 100%;
+            margin: 0;
+            padding: 20px;
+            border-radius: 8px;
+            background: #cbffe4
+            ;
+        }
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            width: 600px;
+            height: 700px;
+            padding: 10px;
+            background: #5ab586;
+            box-shadow: -4px 4px 8px 0px rgba(30, 58, 79, 0.2);
+            overflow: hidden auto;
+            border-radius: 16px; 
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #cbffe4;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(1, 1, 1, 0.2);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+
+        .forecast{
+        border: 1px ;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        font-size: large  ;
+        font-weight: bold;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input{
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #cbffe4;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: medium;
+
+        }
+
+        .errs {
+            color:black;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .button_register {
+            background-color: #396c51;
+            color: #0a0a0a;
+            padding: 20px;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 1.5em;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .button_enter {
+            background-color: #396c51;
+            color: #0a0a0a;
+            padding: 20px;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 1.5em;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        a   {
+            color: inherit;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    {% if user %}
+        <h1>Приветствуем Вас, {{ user.fullname }}!</h1>
+    {% endif %}
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+</html>

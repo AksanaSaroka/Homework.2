@@ -1,28 +1,49 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>registration</title>
+{% extends 'base.html' %}
+{% block title %}registration
+{% endblock %}
 
-</head>
-<body>
-    <h1>Количество лисичек {{count_fox}}</h1>
-    <h1>{{text}}</h1>   
-    <br>
-
-    <div class="fig-wrapper">
-        <!-- вариант картинки из интернета -->
-        {% for fox in foxes %}
-            <figure>
-                <img width="300"  src="{{fox}}" alt="Random Fox" >
-            </figure>
-        {% endfor %}
+{% block content %}
+<div class="form-container">
+    <h2> Регистрация </h2>
+    {% if errs %}
+    <div class="form-errors">
+        <ul>
+            {% for err in errs.items() %}
+                <li>{{ err }}</li>
+            {% endfor %}    
+        </ul>
     </div>
+    {% endif %}
+</div>    
 
-   
-    <p>
-        <a href="/">На главную</a>
-    </p>
-</body>
-</html>
+<div class="form-wrapper">
+
+    <form  method="POST">
+        <div class="form-group">
+            <label for="fullname">Введите Ваши имя и фамилию:</label>
+            <input type="text" id="fullname" name="fullname" value="{{form.fullname if form}}" required>
+        </div>
+        <div class="form-group">
+            <label for="login">Логин:</label>
+            <input type="login" id="login" name="login" value="{{form.login if form}}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password"  required>
+        </div>
+
+        <button class="button_register" type="submit">Зарегистрироваться</button>
+
+        <!-- {% if 'err_reg' %}  
+        <div class="button_home" >
+            <a href="/">На главную</a>
+        </div> -->
+        <!-- {% endif %} -->
+    </form>
+</div>
+
+
+{% endblock %}
+
+

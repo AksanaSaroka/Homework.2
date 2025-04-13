@@ -1,28 +1,31 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>enter</title>
+{% extends 'base.html' %}
 
-</head>
-<body>
-    <h1>Количество лисичек {{count_fox}}</h1>
-    <h1>{{text}}</h1>   
-    <br>
+{% block content %}
 
-    <div class="fig-wrapper">
-        <!-- вариант картинки из интернета -->
-        {% for fox in foxes %}
-            <figure>
-                <img width="300"  src="{{fox}}" alt="Random Fox" >
-            </figure>
-        {% endfor %}
+    <div class="form-wrapper">
+        <form action="/enter/" method="POST">
+            {% if errs %}
+                <p style="color:red">{{ err }}</p>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="login">Логин:</label>
+                <input type="text" id="login" name="login" value="{{login}}" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button class="button_enter" type="submit">Войти</button>
+
+            <div class="button_register">
+                <a href="/registration/">Зарегестрироваться </a>
+            </div>
+
+        </form>
+
     </div>
+{% endblock %}
+
 
    
-    <p>
-        <a href="/">На главную</a>
-    </p>
-</body>
-</html>

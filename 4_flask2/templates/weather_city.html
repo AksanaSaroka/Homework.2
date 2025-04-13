@@ -1,27 +1,23 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>weather</title>
+{% extends 'base.html' %}
 
-</head>
-<body>
+{% block title %}weather{% endblock %}
+
+{% block content %}
+
+
     <h1>Погода в городе {{city}}</h1>
     <h1>{{text}}</h1>   
     <br>
-
-    <article class="forecast">
+    <div class="forecast">
         <p> status {{weather.status}} </p>
         <p> humidity {{weather.humidity}} </p>
         <p> temperature {{temp}} </p>
         <p> feels like {{feels_like}} </p>
     
-    </article>
+    </div>
 
    
     <p>
         <a href="/">На главную</a>
     </p>
-</body>
-</html>
+ {% endblock %}

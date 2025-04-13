@@ -40,7 +40,7 @@ import re
 import os
 import requests
 from pyowm import OWM
-from pprint import pprint
+# from pprint import pprint
 
 BASE_DIR = os.path.dirname(__file__)
 
@@ -54,9 +54,10 @@ users = {}
 
 def get_user():
     return users.get(session.get('user'))
+    # return session.get('user')
 
 def check_fullname(fullname):
-        pattern_name =  r'^[а-яА-ЯёЁ]+$'
+        pattern_name =  r'^[а-яА-ЯёЁ\s]+$'
         if re.search(pattern_name, fullname): 
             return True 
     
@@ -81,8 +82,10 @@ def index():
 
 @app.route("/duck/")
 def duck():
+    user = get_user() 
+   
     response = requests.get('https://random-d.uk/api/v2/random')
-    user = get_user()
+
     data = response.json()
     # print(data)
     # print(data['url'].split('/')[-1])
@@ -128,7 +131,7 @@ def weather_city(city='Minsk'):
         manager = owm.weather_manager()
         obs = manager.weather_at_place(city)
         weather = obs.weather
-        user = get_user()
+        # user = get_user()
         # pprint(obs.to_dict())
         weather_data = {
             'city' : city,
@@ -151,8 +154,7 @@ def weather_city(city='Minsk'):
     
 @app.route("/weather/Minsk/")
 def weather_minsk():
-    user = get_user()
-    return weather_city(city='Minsk',user=user)
+    return weather_city(city='Minsk')
 
 
 @app.route("/registration/", methods=['GET', 'POST'])
@@ -173,7 +175,7 @@ def registration():
             errs['login'] = "Введите правильно логин."  
 
         if not check_password(request.form.get('password')):
-            errs['password'] = "Введите правильно ппароль."  
+            errs['password'] = "Введите правильно пароль."  
 
 
         form = dict(request.form) 
@@ -185,15 +187,15 @@ def registration():
         else:
             if user:
                 errs['err_reg'] = 'Пользователь зарегистрирован.'
+                
                 return render_template ('registration.html',
                                 form = form,
                                 errs = errs)
         
             new_form = form
-            new_form['key'] = 'my secret key 12334'
             users[new_form['login']] = new_form
-            return redirect(url_for('enter'))
-    
+            return redirect(url_for('index'))
+
     return render_template ('registration.html',
                                 form = form
                                 )
@@ -202,21 +204,54 @@ def registration():
 
 @app.route("/enter/", methods=['GET', 'POST'])
 def enter():
+    errs = {}
+    form = {
+        'login':'',
+        'password':'' 
+    }
+    
+    if request.method == 'POST':
+        form = dict(request.form)
+        session['user'] = form['login']
+        user = get_user()
+
+        if user:
+            if not user.get('login'):
+                errs['login'] = "Неправильный логин." 
+    
+            if user.get('password') != form['password']:
+                errs['password'] = "Неправильный пароль." 
+    
+            if errs:
+                return render_template ('enter.html',
+                                form = form,
+                                errs = errs)
+            return redirect(url_for('index'))
+        else:
+            return render_template('enter.html',form=form, errs=errs)
+    
     return render_template('enter.html')
 
 
+@app.route("/exit/")
+def exit():
+    session.pop('user')
+    return redirect(url_for('enter'))
 
-@app.route('/get_form/')
-def get_form():
-    pass
+@app.before_request
+def check_user():
+    if request.endpoint in ['registration','enter'] and session.get('user'):
+        return redirect (url_for('index'))
+    if request.endpoint not in ['registration','enter','index'] and not session.get('user'):
+        return redirect(url_for('enter'))
+
 
 
 # Сработает если ошибка 404 - т.е. любой другой путь который выше не предусмотрен
 @app.errorhandler(404)
 def page_not_found(error):
     return '<h1 style="color:red">такой страницы не существует</h1>'
+print(users)
 
-
-
-
-app.run(debug=True)
+if __name__ == "__main__":
+    app.run(port=5000, debug=True)

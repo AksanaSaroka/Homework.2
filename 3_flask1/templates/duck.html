@@ -1,14 +1,18 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>duck</title>
+{% extends 'base.html' %}
 
-</head>
-<body>
-    <h1>Рандомная утка №{{duck_photo_number }}</h1>   
-    <br>
+{% block title %}
+    Рандомная утка №{{duck_photo_number }}  
+{% endblock %}
+
+{% block content %}
+    <style>
+        img {
+            width: 100%;
+            height: 100%;
+            max-height:400px;
+        }
+    </style>
+
 
     <div class="fig-wrapper">
         <!-- вариант картинки из интернета -->
@@ -22,5 +26,7 @@
     <p>
         <a href="/">На главную</a>
     </p>
-</body>
-</html>
+{% endblock %}
+
+
+

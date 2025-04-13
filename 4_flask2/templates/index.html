@@ -1,55 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aksana_work</title>
-    <style>
-        /* # CSS */
-        body{
-            background-color: rgba(177, 237, 197, 0.082);
-            /* background-image: url(); */            
-        }
-
-        a{
-            
-            padding: 10px;
-            border: 1px solid black;
-            margin: 50px;
-        }
-    </style>
-</head>
-<body>    
-    <p>
-        <a href="/duck/">уточки</a>
-    </p>
-    <br>
-    <p>    
-        <a href="/fox/">лисички</a>
-    </p>
-    <br>
-    <p>    
-        <a href="/weather/Minsk/">погода в Минске</a>
-    </p>
-    <br>
-    <p>    
-        <a href="/weather/">погода в выбранном городе</a>
-    </p>
-    <br>
-    <p>    
-        <a href="/registration/">регистрация</a>
-    </p>
-    <br>
-    <p>    
-        <a href="/enter/">вход</a>
-    </p>
-
+    <title>Aks_work</title>
     
+ <style>  
+    body{
+            background-color:  #cbffe4; 
+            background-image: url("https://img.freepik.com/free-vector/simple-dandelion-flower-seeds-background-design_1017-39052.jpg?t=st=1744551186~exp=1744554786~hmac=5d8ff64a8a4ccff3b06b5e8c60e794cd6ad940233438bcc449fea7bcba554ddf&w=996");     
+            background-size: cover;
+    }
+
+    .button {            
+            padding: 10px;
+            border: 1px solid rgb(60, 80, 76);
+            margin: 30px;
+            background-color: #88cfa9;
+            border-radius: 5px;
+            transition: 500ms;
+            font-weight: bold;
+            font: #0c0e0d;
+    }
+        
+    .button:hover { 
+            background-color:rgb(43, 235, 161);
+            /* box-shadow: 6px 7px 13px 0px grey; */
+    } 
+    .topnav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .topnav li {
+        margin: 0 15px;
+        display: flex;
+    }
+</style> 
+</head>
+<body>
+<header>
+    {% if 'user_id' in session%}
+    <p>Пнриветствуем Вас, {{session['username']}}!</p>
+    {% endif %}
+
+    <nav class="topnav">
+        <ul>
+            <li><a class="button" href="/duck/">Уточка</a></li>
+            <li><a class="button" href="/fox/">Лисички</a></li>
+            <li><a class="button" href="/weather/Minsk/">Погода в Минске</a></li>
+            <li><a class="button" href="/weather/">Погода в выбранном городе</a></li>
+            <li><a class="button" href="/enter/">Вход</a></li>
+            <li><a class="button" href="/exit/">Выход</a></li>
+            <li><a class="button" href="/registration/">Регистрация</a></li>      
+
+        </ul>
+    </nav>
+
+</header>
+
+<main>
+</main>
+
 </body>
-<script>
-
-
-</script>
-
 </html>
-

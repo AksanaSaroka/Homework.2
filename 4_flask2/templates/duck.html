@@ -1,26 +1,19 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>duck</title>
+{% extends 'base.html' %}
 
-</head>
-<body>
-    <h1>Рандомная утка №{{duck_photo_number }}</h1>   
-    <br>
+{% block title %} duck {% endblock %}
 
+{% block content %}
+<h1>Рандомная утка №{{duck_photo_number }}</h1>   
+<br>
     <div class="fig-wrapper">
         <!-- вариант картинки из интернета -->
         <figure>
             <img width="300"  src="{{duck_photo_url}} " alt="{{duck_photo_number}}" >
         </figure>
-
     </div>
-
-   
+ 
     <p>
         <a href="/">На главную</a>
     </p>
-</body>
-</html>
+
+{% endblock %}
